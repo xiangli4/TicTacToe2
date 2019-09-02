@@ -56,7 +56,9 @@ public class Board {
                 whoseTurn = (whoseTurn + 1) % 2; // Flips between 0 and 1
             }
 
+            System.out.println();
             System.out.println(this.toString());
+            System.out.println();
         }
 
         if (isFull()) {
