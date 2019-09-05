@@ -1,22 +1,38 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Board {
-    private int[][] board = new int[3][3];
-    private static final int EMPTY = -1;
-    private static final int O = 0;
-    private static final int X = 1;
+    private static final int BOARD_SIZE = 3;
+    private int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
+    static final int EMPTY = -3;
+    static final int O = 0;
+    static final int X = 1;
 
     public Board() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j] = EMPTY;
             }
         }
     }
 
+    Board(int[][] board) {
+        /*
+        This is called a "deep copy"
+        Since arrays are objects, if I were to just say this.board = board
+        I would be copying the reference to the parameter and putting it in my class
+        If I were to then change the parameter in the outer scope changes would show here
+        Conversely if I change the board here it would affect the parameter in the outer scope
+        By copying each int individually I copy the values, rather than the reference
+        */
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            this.board[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+    }
+
     private boolean isFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
                 if (board[i][j] == EMPTY) {
                     return false;
                 }
@@ -24,6 +40,39 @@ public class Board {
         }
 
         return true;
+    }
+
+    int winner() {
+        int diagSum = 0;
+        int antiDiagSum = 0;
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            int rowSum = 0;
+            int colSum = 0;
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                rowSum += board[i][j];
+                colSum += board[j][i];
+
+                if (i + j == board.length - 1) {
+                    antiDiagSum += board[i][j];
+                }
+            }
+
+            diagSum += board[i][i];
+
+            if (rowSum == 0 || colSum == 0) {
+                return O;
+            } else if (rowSum == BOARD_SIZE || colSum == BOARD_SIZE) {
+                return X;
+            }
+        }
+
+        if (diagSum == 0 || antiDiagSum == 0) {
+            return O;
+        } else if (diagSum == BOARD_SIZE || antiDiagSum == BOARD_SIZE) {
+            return X;
+        }
+
+        return EMPTY;
     }
 
     private String whichPlayer(int value) {
@@ -53,7 +102,13 @@ public class Board {
                 int yCoord = Character.getNumericValue(move.charAt(2));
                 board[xCoord][yCoord] = whoseTurn;
 
-                whoseTurn = (whoseTurn + 1) % 2; // Flips between 0 and 1
+                int winner = winner();
+                if (winner != EMPTY) {
+                    System.out.println(whichPlayer(winner) + " is the winner!");
+                    shouldQuit = true;
+                } else {
+                    whoseTurn = (whoseTurn + 1) % 2; // Flips between 0 and 1
+                }
             }
 
             System.out.println();
