@@ -4,10 +4,10 @@ import org.junit.Test;
 public class TestWinner {
     @Test
     public void testXRow1() {
-        int[][] boardState = {
-            { Board.X, Board.X, Board.X },
-            { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-            { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { Board.X, Board.X, Board.X },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -18,10 +18,10 @@ public class TestWinner {
 
     @Test
     public void testORow1() {
-        int[][] boardState = {
+        Integer[][] boardState = {
                 { Board.O, Board.O, Board.O },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -32,10 +32,10 @@ public class TestWinner {
 
     @Test
     public void testXCol1() {
-        int[][] boardState = {
-                { Board.X, Board.EMPTY, Board.EMPTY },
-                { Board.X, Board.EMPTY, Board.EMPTY },
-                { Board.X, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { Board.X, null, null },
+                { Board.X, null, null },
+                { Board.X, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -46,10 +46,10 @@ public class TestWinner {
 
     @Test
     public void testOCol1() {
-        int[][] boardState = {
-                { Board.O, Board.EMPTY, Board.EMPTY },
-                { Board.O, Board.EMPTY, Board.EMPTY },
-                { Board.O, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { Board.O, null, null },
+                { Board.O, null, null },
+                { Board.O, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -60,10 +60,10 @@ public class TestWinner {
 
     @Test
     public void testXDiag() {
-        int[][] boardState = {
-                { Board.X, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.X, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.X },
+        Integer[][] boardState = {
+                { Board.X, null, null },
+                { null, Board.X, null },
+                { null, null, Board.X },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -74,10 +74,10 @@ public class TestWinner {
 
     @Test
     public void testODiag() {
-        int[][] boardState = {
-                { Board.O, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.O, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.O },
+        Integer[][] boardState = {
+                { Board.O, null, null },
+                { null, Board.O, null },
+                { null, null, Board.O },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -88,10 +88,10 @@ public class TestWinner {
 
     @Test
     public void testXAntiDiag() {
-        int[][] boardState = {
-                { Board.EMPTY, Board.EMPTY, Board.X },
-                { Board.EMPTY, Board.X, Board.EMPTY },
-                { Board.X, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { null, null, Board.X },
+                { null, Board.X, null },
+                { Board.X, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -102,10 +102,10 @@ public class TestWinner {
 
     @Test
     public void testOAntiDiag() {
-        int[][] boardState = {
-                { Board.EMPTY, Board.EMPTY, Board.O },
-                { Board.EMPTY, Board.O, Board.EMPTY },
-                { Board.O, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { null, null, Board.O },
+                { null, Board.O, null },
+                { Board.O, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
@@ -116,70 +116,86 @@ public class TestWinner {
 
     @Test
     public void testNoWinnerMix() {
-        int[][] boardState = {
-                { Board.O, Board.EMPTY, Board.X },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { Board.O, null, Board.X },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
-                Board.EMPTY,
+                game.EMPTY,
                 game.winner()
         );
     }
 
     @Test
     public void testNoWinner2Os1X() {
-        int[][] boardState = {
+        Integer[][] boardState = {
                 { Board.O, Board.O, Board.X },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
-                Board.EMPTY,
+                game.EMPTY,
                 game.winner()
         );
     }
 
     @Test
     public void testNoWinner2Os1Empty() {
-        int[][] boardState = {
-                { Board.O, Board.O, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { Board.O, Board.O, null },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
-                Board.EMPTY,
+                game.EMPTY,
                 game.winner()
         );
     }
 
     @Test
     public void testNoWinner2Xs1O() {
-        int[][] boardState = {
+        Integer[][] boardState = {
                 { Board.O, Board.X, Board.X },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
-                Board.EMPTY,
+                game.EMPTY,
                 game.winner()
         );
     }
 
     @Test
     public void testNoWinner2Xs1Empty() {
-        int[][] boardState = {
-                { Board.EMPTY, Board.X, Board.X },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
-                { Board.EMPTY, Board.EMPTY, Board.EMPTY },
+        Integer[][] boardState = {
+                { null, Board.X, Board.X },
+                { null, null, null },
+                { null, null, null },
         };
         Board game = new Board(boardState);
         Assert.assertEquals(
-                Board.EMPTY,
+                game.EMPTY,
+                game.winner()
+        );
+    }
+
+
+    @Test
+    public void testLargerBoardNoWinner() {
+        Integer[][] boardState = {
+                { null, Board.X, Board.X, Board.X },
+                { null, null, null, null },
+                { null, null, null, null },
+                { null, null, null, null },
+        };
+        Board game = new Board(boardState);
+        Assert.assertEquals(
+                game.EMPTY,
                 game.winner()
         );
     }

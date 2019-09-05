@@ -2,13 +2,16 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Board {
-    private static final int BOARD_SIZE = 3;
-    private int[][] board = new int[BOARD_SIZE][BOARD_SIZE];
-    static final int EMPTY = -3;
+    private final int BOARD_SIZE;
+    private int[][] board;
+    final int EMPTY;
     static final int O = 0;
     static final int X = 1;
 
     public Board() {
+        BOARD_SIZE = 3;
+        EMPTY = -BOARD_SIZE;
+        board = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j] = EMPTY;
@@ -16,7 +19,7 @@ public class Board {
         }
     }
 
-    Board(int[][] board) {
+    Board(Integer[][] board) {
         /*
         This is called a "deep copy"
         Since arrays are objects, if I were to just say this.board = board
@@ -25,8 +28,17 @@ public class Board {
         Conversely if I change the board here it would affect the parameter in the outer scope
         By copying each int individually I copy the values, rather than the reference
         */
+        BOARD_SIZE = board[0].length;
+        EMPTY = -BOARD_SIZE;
+        this.board = new int[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
-            this.board[i] = Arrays.copyOf(board[i], board[i].length);
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                if (board[i][j] == null) {
+                    this.board[i][j] = EMPTY;
+                } else {
+                    this.board[i][j] = board[i][j];
+                }
+            }
         }
     }
 
